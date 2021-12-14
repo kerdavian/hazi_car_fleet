@@ -18,7 +18,7 @@ class CarPosition(Resource):
   def post(self, plate):
     data = CarPosition.parser.parse_args()
     car = CarModel.find_by_attribute(license_plate=plate)
-    print(car.id)
+    # print(car.id)
 
     if not car:
       return {'message': 'This car does not exist!'}, 404
@@ -34,3 +34,13 @@ class CarPosition(Resource):
       return {"message": "An error occurred creating the fleet."}, 500
 
     return {'message': 'The save was successfully'}, 201
+
+  def get(self, plate):
+    car = CarModel.find_by_attribute(license_plate=plate)
+    if not car:
+      return {'message': 'This car does not exist'}
+
+    return {
+        'positions':
+        [position.json() for position in PositionModel.query.all()]
+    }
