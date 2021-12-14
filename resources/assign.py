@@ -24,7 +24,7 @@ class AssignDriverToCar(Resource):
     car = CarModel.find_by_attribute(id=data['car_id'])
     if not car:
       return {"message": "Car does not exist"}, 404
-    print(car.driver_id)
+    # print(car.driver_id)
 
     if car.driver_id == driver.id:
       return {"message": f"This assignment has already been made."}, 200
@@ -47,3 +47,21 @@ class AssignDriverToCar(Resource):
         "message":
         f"Driver {driver.name} was assigned to car: {car.license_plate}."
     }, 201
+
+  def delete(self):
+    # itt most kód duplikáció van, azonbna a függvénybe szervezés nem rövidítené a kódót és a megértést sem!
+    data = AssignDriverToCar.parser.parse_args()
+
+    driver = DriverModel.find_by_attribute(id=data['driver_id'])
+    if not driver:
+      return {"message": "Driver does not exist"}, 404
+    car = CarModel.find_by_attribute(id=data['car_id'])
+    if not car:
+      return {"message": "Car does not exist"}, 404
+
+    if car.driver_id == driver.id:
+      car.driver_id = None
+      db.session.commit()
+      return {'message': 'Deleted the driver'}
+
+    return {'message': 'This assignment does not exist'}
