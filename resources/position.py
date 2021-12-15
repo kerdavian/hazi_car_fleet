@@ -41,6 +41,8 @@ class CarPosition(Resource):
       return {'message': 'This car does not exist'}
 
     return {
-        'positions':
-        [position.json() for position in PositionModel.query.all()]
+        'positions': [
+            position.json()
+            for position in PositionModel.query.filter_by(car_id=car.id)
+        ]
     }
