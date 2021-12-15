@@ -27,6 +27,14 @@ class CarPosition(Resource):
                                  longitude=data['longitude'],
                                  car_id=car.id)
     car_position.date = now()
+    data_latlon = PositionModel.resolve_address(data['latitude'],
+                                                data['longitude'])
+    # (PositionModel.resolve_address(data['latitude'],
+    #                                data['longitude']))['display_name']
+    if data_latlon:
+      car_position.address = data_latlon['display_name']
+    else:
+      car_position.address = 'No GPS data'
 
     try:
       car_position.save_to_db()
