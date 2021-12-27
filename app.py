@@ -47,5 +47,6 @@ api.add_resource(FleetList, '/fleets')
 api.add_resource(CarFleet, '/car_fleet')
 api.add_resource(CarPosition, '/car/<string:plate>/position')
 
+
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=5000, debug=True)

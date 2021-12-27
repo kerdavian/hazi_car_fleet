@@ -32,9 +32,10 @@ class CarPosition(Resource):
     # (PositionModel.resolve_address(data['latitude'],
     #                                data['longitude']))['display_name']
     if data_latlon:
-      car_position.address = data_latlon['display_name']
-    else:
-      car_position.address = 'No GPS data'
+      try:
+        car_position.address = data_latlon['display_name']
+      except:
+        car_position.address = 'No GPS data'
 
     try:
       car_position.save_to_db()

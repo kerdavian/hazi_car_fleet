@@ -11,7 +11,7 @@ class PositionModel(BaseModel, MixinModel):
   date = db.Column(db.DateTime)
   latitude = db.Column(db.Float(precision=5))
   longitude = db.Column(db.Float(precision=5))
-  address = db.column(db.String(300))
+  address = db.Column(db.String(300))
   # one to many with bidirectional relationship
   # https://docs.sqlalchemy.org/en/14/orm/basic_relationships.html#one-to-many
   car_id = db.Column(db.Integer, db.ForeignKey('cars.id'))
@@ -26,8 +26,8 @@ class PositionModel(BaseModel, MixinModel):
     return {
         'latitude': self.latitude,
         'longitude': self.longitude,
-        'date': self.date.isoformat()
-        # 'address': self.address
+        'date': self.date.isoformat(),
+        'address': self.address
     }
 
   def resolve_address(lat, lon):

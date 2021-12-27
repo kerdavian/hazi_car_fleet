@@ -5,7 +5,8 @@ import hashlib
 
 def authenticate(username, password):
   user = UserModel.find_by_attribute(username=username)
-  if user and safe_str_cmp(user.password, password):
+  hash_pass = hash_password(password)
+  if user and safe_str_cmp(user.password, hash_pass):
     return user
 
 
